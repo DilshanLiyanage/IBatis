@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Student">
+    <insert id="insert" parameterClass="Student">
+        insert into student(fname,sname,address,grade)
+        values(#fname#, #sname#, #address#, #grade#)
+        <selectKey resultClass="int" keyProperty="id">
+            select last_insert_id() as id
+        </selectKey>
+    </insert>
+
+    
+    <!--<resultMap id="result" class="Student">
+        <result property="id" column="id"/>
+        <result property="fname" column="fname"/>
+        <result property="sname" column="sname"/>
+        <result property="address" column="address"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
+    
+    <select id="getAll" resultMap="result">
+        SELECT * FROM STUDENT
+    </select>-->
+
+    <update id="update" parameterClass="Student">
+        Update Student
+        set sname = #sname#
+        where id=#id#
+    </update>
+
+
+    <delete id="delete" parameterClass="int">
+        Delete from student
+        where id=#id#
+    </delete>
+    
+    
+    <!--<procedure id="getStuInfo" resultClass="Student" parameterMap="getStuInfoCall">
+        { call getStu( #id# )}
+    </procedure>
+
+    <parameterMap id="getStuInfoCall" class="map">
+        <parameter property="id" jdbcType="INT" javaType="java.lang.Integer" mode="IN"/>
+    </parameterMap>-->
+
+
+    <select id="dynamicSelect" resultClass="Student">
+        select * from student
+
+
+        <dynamic prepend="WHERE">
+            <isNull property="id">
+                id IS NULL
+            </isNull>
+            <isNotNull property="id">
+                id = #id#
+            </isNotNull>
+        </dynamic>
+
+
+
+    </select>
+
+</sqlMap>
