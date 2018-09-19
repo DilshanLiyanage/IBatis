@@ -7,5 +7,10 @@
 # xml files regarding to pojo clsses 
 # Main class to run
 
+----------------------------------------------------------------------------------------
+
+# We need ibatis jar file for above project
+
+
 
   
